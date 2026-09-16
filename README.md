@@ -1,39 +1,56 @@
+<div align="center">
+
 # Repo HUD
 
-A live HUD of local git repositories: branch, dirty count, ahead/behind, without opening a terminal.
+**Live git status HUD for your local repositories — branch, dirty count, ahead/behind.**  
+macOS menu extra — lives in the menu bar, no Dock icon.
 
-Menu extra for macOS 14+. It lives in the menu bar and does not show a Dock icon.
+<br/>
 
-## Features
+[![Latest Release](https://img.shields.io/github/v/release/BadryansahBangsawan/repo-hud?style=flat-square&color=76B900&label=latest)](https://github.com/BadryansahBangsawan/repo-hud/releases/latest)
+[![macOS](https://img.shields.io/badge/macOS-14%2B-black?style=flat-square&logo=apple)](https://github.com/BadryansahBangsawan/repo-hud/releases/latest)
+[![Swift](https://img.shields.io/badge/Swift-5.9%2B-F05138?style=flat-square&logo=swift&logoColor=white)](https://swift.org)
 
-- Watch folders; every nested git repo is listed.
-- Branch name, dirty file count, ahead/behind vs upstream.
-- FSEvents refresh when files change.
-- Fetch, copy branch, Reveal in Finder.
-- Add or remove watch folders in Settings.
+<br/>
 
-## Requirements
+</div>
 
-- macOS 14 Sonoma or later
-- Swift 5.9 or later
-- `git` on `PATH`
+---
 
-## Install
+## Download
 
-Homebrew (macOS 14+):
+| Platform | File |
+|---|---|
+| **macOS** (Apple Silicon & Intel, macOS 14+) | `RepoHUD-*-macos.zip` |
+
+[Go to Releases](https://github.com/BadryansahBangsawan/repo-hud/releases/latest)
+
+---
+
+## Installation
+
+### Homebrew (recommended)
 
 ```bash
 brew tap BadryansahBangsawan/mac-menu-apps
 brew install --cask repo-hud
 ```
 
-Opens as a menu extra (no Dock icon). The cask is ad-hoc signed. If Gatekeeper blocks it:
+A **Repo HUD** icon appears in the menu bar. If Gatekeeper blocks it on first launch:
 
 ```bash
-xattr -cr /Applications/RepoHUD.app
+xattr -cr /Applications/RepoHUD.app && open /Applications/RepoHUD.app
 ```
 
-Build from source:
+Or: right-click the app, Open, then Open again. Still blocked? **System Settings → Privacy & Security → Open Anyway**.
+
+### GitHub Releases
+
+1. Download `RepoHUD-*-macos.zip` from [Releases](https://github.com/BadryansahBangsawan/repo-hud/releases/latest)
+2. Unzip and drag **RepoHUD** into Applications
+3. On first launch, run the xattr command above if Gatekeeper blocks it
+
+### Build from source
 
 ```bash
 git clone https://github.com/BadryansahBangsawan/repo-hud.git
@@ -42,35 +59,22 @@ bash package-app.sh
 open dist/RepoHUD.app
 ```
 
-Enable **Open at Login** from Settings if you want it after reboot.
+Requires Xcode Command Line Tools and Swift 5.9+.
 
-## Usage
+---
 
-- Add a folder that contains git repos (for example your `Developer` or `Downloads` directory).
-- Click a row’s context menu for Fetch, Copy branch, or Reveal in Finder.
-- If `git` is missing, the panel shows **git not in PATH**.
+## Notes
 
-## Permissions
+– Add watch folders in Settings; every nested git repo is listed.
+– FSEvents refreshes the view when files change.
+– Requires git on PATH (included on macOS).
+– No Dock icon; lives entirely in the menu bar.
 
-- Folder access via the standard open panel. No Accessibility or Screen Recording.
+---
 
-Denied permissions must not crash the app. You should see a banner and a button to open System Settings.
+<div align="center">
 
-## Privacy
+Made with ♥ for developers who prefer staying in the flow.
 
-No network except `git fetch` when you choose Fetch. Watch list is `~/Library/Application Support/Repo HUD/watches.json`.
+</div>
 
-Bundle ID: `engineer.badry.repohud`.
-
-## Development
-
-```bash
-swift build
-swift build -c release --product RepoHUD
-```
-
-Layout: `Sources/` (SwiftPM executable), `Info.plist`, `Assets/AppIcon.icns`, `package-app.sh`.
-
-## License
-
-[MIT](LICENSE)
