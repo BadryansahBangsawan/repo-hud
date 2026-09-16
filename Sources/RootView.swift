@@ -5,7 +5,7 @@ struct RootView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: FunTheme.sectionSpacing) {
             if model.gitMissing {
                 Label("git not in PATH", systemImage: "exclamationmark.triangle.fill")
                     .foregroundStyle(.red)
@@ -27,25 +27,24 @@ struct RootView: View {
                     .fixedSize(horizontal: false, vertical: true)
             }
 
-            if model.repos.isEmpty {
-                if model.isScanning {
+            if model.repos.isEmpty && !model.isScanning {
+                ExtraEmptyState(
+                    title: "No repositories",
+                    detail: "Add a folder that contains git repos.",
+                    actionTitle: "Add folder",
+                    action: { model.addFoldersFromPanel() }
+                )
+            } else if model.repos.isEmpty {
+                VStack(alignment: .leading, spacing: FunTheme.innerSpacing) {
                     ProgressView()
                         .controlSize(.small)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                } else {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("Add a folder that contains git repos")
-                            .foregroundStyle(.secondary)
-                        Button("Add Folder") {
-                            model.addFoldersFromPanel()
-                        }
-                        .buttonStyle(.borderedProminent)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    Text("Scanning…")
+                        .foregroundStyle(.secondary)
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
             } else {
                 ScrollView {
-                    LazyVStack(alignment: .leading, spacing: 2) {
+                    LazyVStack(alignment: .leading, spacing: FunTheme.innerSpacing) {
                         ForEach(model.repos) { repo in
                             RepoRowView(repo: repo)
                         }
@@ -54,15 +53,11 @@ struct RootView: View {
                 .frame(maxHeight: 420)
             }
 
-            SettingsLink {
-                Text("Settings…")
-            }
-            .buttonStyle(.plain)
+            ExtraSettingsFooter()
         }
-        .funPanel()
-        .background(.regularMaterial)
         .animation(reduceMotion ? nil : FunTheme.spring, value: model.repos)
         .animation(reduceMotion ? nil : FunTheme.spring, value: model.gitMissing)
+        .funPanel()
         .onAppear {
             model.scheduleScan(immediate: true)
         }
@@ -115,9 +110,8 @@ struct RepoRowView: View {
                     }
                 }
             }
-            .padding(.vertical, 6)
-            .padding(.horizontal, 4)
             .contentShape(Rectangle())
+            .extraRowSurface()
         }
         .buttonStyle(.plain)
         .contextMenu {

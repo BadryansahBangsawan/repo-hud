@@ -26,7 +26,7 @@ struct SettingsView: View {
                         .buttonStyle(.borderless)
                     }
                 }
-                Button("Add Folder…") {
+                Button("Add folder") {
                     model.addFoldersFromPanel()
                 }
             }
