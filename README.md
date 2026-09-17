@@ -72,6 +72,14 @@ Requires Xcode Command Line Tools and Swift 5.9+.
 
 ---
 
+## Troubleshooting
+
+**HUD shows no repos after adding a folder:** Quit and relaunch Repo HUD — the watcher registers on startup, so newly added root folders need a fresh launch to begin tracking.
+
+**Ahead/behind count is stale:** The count reflects the last `git fetch` you ran; Repo HUD reads local state only and does not fetch from remote automatically.
+
+---
+
 <div align="center">
 
 Made with ♥ for developers who prefer staying in the flow.
