@@ -65,7 +65,7 @@ Requires Xcode Command Line Tools and Swift 5.9+.
 
 ## Notes
 
-– Add watch folders in Settings; every nested git repo is listed.
+– Add watch folders in Settings; every nested git repo is listed (unlimited depth under each root).
 – FSEvents refreshes the view when files change.
 – Requires git on PATH (included on macOS).
 – No Dock icon; lives entirely in the menu bar.
